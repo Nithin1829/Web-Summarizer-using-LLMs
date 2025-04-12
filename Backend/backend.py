@@ -18,12 +18,10 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 app = Flask(__name__)
 CORS(app)
 
-# Root health check route
 @app.route("/", methods=["GET"])
 def home():
     return "✅ Flask backend is running!"
 
-# Scraper class
 class Website:
     def __init__(self, url):
         self.url = url
@@ -39,11 +37,11 @@ class Website:
         except Exception as e:
             return f"Failed to extract text from URL: {e}"
 
-# Prompt/message builder
 def build_prompt(text):
-    return f"Summarize the following web page:{text}"
+    return f"Summarize the following web page:
 
-# Route: summarize using both OpenAI and Ollama
+{text}"
+
 @app.route("/summarize", methods=["POST"])
 def summarize():
     try:
@@ -53,12 +51,13 @@ def summarize():
         website = Website(url)
         text = website.text
 
-        if len(text) > 24000:
-            text = text[:24000]
+        # Truncate to 6,000 characters (~2,000 tokens)
+        if len(text) > 6000:
+            text = text[:6000]
 
         prompt = build_prompt(text)
 
-        # 1. OpenAI API summary
+        # OpenAI API summary
         messages = [
             {"role": "system", "content": "You are a helpful assistant that summarizes website content clearly and concisely."},
             {"role": "user", "content": prompt}
@@ -70,7 +69,7 @@ def summarize():
         )
         openai_summary = openai_response.choices[0].message.content
 
-        # 2. Ollama local model summary
+        # Ollama local model summary
         ollama_response = subprocess.run(
             ["ollama", "run", "llama3", prompt],
             capture_output=True,

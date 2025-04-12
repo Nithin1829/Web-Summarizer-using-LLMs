@@ -100,10 +100,8 @@ Response:
 
 ## 📷 Screenshots
 
-> 📸 Add your screenshots below
-
-- `screenshots/Screenshot 2025-04-12 at 6.44.09 PM.png`
-- `screenshots/Screenshot 2025-04-12 at 6.43.34 PM.png`
+- `screenshots/shot1.png`
+- `screenshots/shot2.png`
 
 ---
 
