@@ -50,7 +50,7 @@ pip install -r requirements.txt
 3. Run backend:
 
 ```bash
-python backend_with_ollama_limited.py
+python backend.py
 ```
 
 Runs on: `http://localhost:5000`
