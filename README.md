@@ -1,103 +1,85 @@
-# 🧠 Web Summarizer using LLMs
+# 🧠 Web Summarizer using LLMs (OpenAI + Ollama)
 
-This is a full-stack AI-powered web summarization application.  
-It extracts main content from any webpage and summarizes it using OpenAI's GPT models.
+This is a full-stack project that summarizes content from any webpage using both:
+- 🔵 OpenAI GPT (via API)
+- 🟢 Ollama running a local model (like LLaMA 3)
 
-Built with:
-- ⚛️ React (Frontend)
-- 🎨 Tailwind CSS (Styling)
-- 🧠 Python Flask (Backend)
-- 🤖 OpenAI GPT API
-- 🔍 BeautifulSoup (HTML parsing)
+It allows users to compare summaries side-by-side between cloud-hosted and local LLMs.
 
 ---
 
-## 🌐 Live Flow
+## 🌐 Project Overview
 
-1. User enters a URL into the frontend
-2. React sends the URL to the Flask backend via POST `/summarize`
-3. Flask:
-   - Scrapes and cleans the webpage using BeautifulSoup
-   - Truncates long text to fit model token limits
-   - Sends cleaned content to OpenAI (gpt-3.5-turbo or gpt-4o)
-4. Receives and returns summary to the frontend
-5. User sees the summary in real-time
+| Component     | Tech Stack                     |
+|---------------|--------------------------------|
+| Frontend      | React + Tailwind CSS           |
+| Backend       | Flask + OpenAI SDK + BeautifulSoup |
+| Local Model   | Ollama (with llama3)           |
 
 ---
 
-## 📁 Project Structure
+## 🔍 Features
+
+- URL input to fetch any webpage
+- Strips out unwanted tags (`nav`, `footer`, etc.)
+- Summarizes content using:
+  - **GPT-3.5/GPT-4o via OpenAI API**
+  - **LLaMA3 via Ollama (local)**
+- Side-by-side comparison of summaries
+- Token limit applied to avoid timeout
+- Tailwind-styled responsive frontend
+
+---
+
+## 🚀 How to Run
+
+### 📦 Backend (Flask + OpenAI + Ollama)
+
+1. Create `.env` in `Backend/` with:
 
 ```
-web-summarizer/
-├── backend/
-│   ├── backend.py              # Flask backend code
-│   ├── .env                    # OpenAI API key
-│   └── requirements.txt        # Python dependencies
-├── frontend/
-│   ├── src/
-│   │   ├── App.jsx             # Main frontend logic
-│   │   ├── index.css           # Tailwind styles
-│   │   └── index.js            # React root
-│   ├── public/
-│   │   └── index.html
-│   ├── package.json            # React app config
-│   ├── tailwind.config.js
-│   └── postcss.config.js
+OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxx
 ```
 
----
-
-## 🚀 Quick Start
-
-### 🧪 Backend (Flask + OpenAI)
-
-#### 1. Setup
+2. Install dependencies:
 
 ```bash
-cd backend
 pip install -r requirements.txt
 ```
 
-#### 2. Create `.env` file
-
-```
-OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxx
-```
-
-#### 3. Run the backend
+3. Run backend:
 
 ```bash
-python backend.py
+python backend_with_ollama_limited.py
 ```
 
-It runs at: `http://localhost:5000`
+Runs on: `http://localhost:5000`
 
 ---
 
-### 🌐 Frontend (React + Tailwind CSS)
+### 💻 Frontend (React + Tailwind)
 
-#### 1. Setup
+1. Install dependencies:
 
 ```bash
-cd frontend
 npm install
 ```
 
-#### 2. Start React server
+2. Start React app:
 
 ```bash
 npm start
 ```
 
-Runs at: `http://localhost:3000`
+Opens at: `http://localhost:3000`
 
 ---
 
-## 🧠 API Reference
+## 🧪 API Endpoint
 
-### `POST /summarize`
+**POST** `/summarize`
 
-**Request:**
+Request:
 
 ```json
 {
@@ -105,36 +87,37 @@ Runs at: `http://localhost:3000`
 }
 ```
 
-**Response:**
+Response:
 
 ```json
 {
-  "summary": "OpenAI is a leading research lab focused on developing AI responsibly..."
+  "openai_summary": "...",
+  "ollama_summary": "..."
 }
 ```
 
 ---
 
-## 🔥 Features
+## 📷 Screenshots
 
-- ✂️ Automatically removes navbars, footers, ads from scraped pages
-- 📄 Supports large inputs (with token-limited truncation)
-- 💬 Uses OpenAI’s GPT for accurate, clean summaries
-- 💻 Fully styled frontend with TailwindCSS
-- 🧠 Easily extendable for PDF, text input, or local LLMs
+> 📸 Add your screenshots below
+
+- `screenshots/homepage.png`
+- `screenshots/summary-result.png`
 
 ---
 
-## 📌 Future Ideas
+## 🧠 Future Improvements
 
-- 🔁 Add support for bullet-point vs paragraph summaries
-- 📄 Export summaries to PDF or Markdown
-- 🧠 Add local model support with Ollama or Llama.cpp
-- 🌍 Deploy backend (Render, Railway) and frontend (Vercel, Netlify)
+- PDF & text input support
+- Export summaries to Markdown/PDF
+- Add toggle for bullet vs paragraph summary
+- Deploy backend to Render/Railway
+- Deploy frontend to Vercel/Netlify
 
 ---
 
 ## 📄 License
 
-MIT License  
-Built with 💙 by [Your Name](https://github.com/yourusername)
+MIT License.  
+Made with ❤️ by [@Nithin1829](https://github.com/Nithin1829)
