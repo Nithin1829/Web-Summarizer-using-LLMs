@@ -1,70 +1,140 @@
-# Getting Started with Create React App
+# 🧠 Web Summarizer using LLMs
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a full-stack AI-powered web summarization application.  
+It extracts main content from any webpage and summarizes it using OpenAI's GPT models.
 
-## Available Scripts
+Built with:
+- ⚛️ React (Frontend)
+- 🎨 Tailwind CSS (Styling)
+- 🧠 Python Flask (Backend)
+- 🤖 OpenAI GPT API
+- 🔍 BeautifulSoup (HTML parsing)
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🌐 Live Flow
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. User enters a URL into the frontend
+2. React sends the URL to the Flask backend via POST `/summarize`
+3. Flask:
+   - Scrapes and cleans the webpage using BeautifulSoup
+   - Truncates long text to fit model token limits
+   - Sends cleaned content to OpenAI (gpt-3.5-turbo or gpt-4o)
+4. Receives and returns summary to the frontend
+5. User sees the summary in real-time
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 📁 Project Structure
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+web-summarizer/
+├── backend/
+│   ├── backend.py              # Flask backend code
+│   ├── .env                    # OpenAI API key
+│   └── requirements.txt        # Python dependencies
+├── frontend/
+│   ├── src/
+│   │   ├── App.jsx             # Main frontend logic
+│   │   ├── index.css           # Tailwind styles
+│   │   └── index.js            # React root
+│   ├── public/
+│   │   └── index.html
+│   ├── package.json            # React app config
+│   ├── tailwind.config.js
+│   └── postcss.config.js
+```
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🚀 Quick Start
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 🧪 Backend (Flask + OpenAI)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### 1. Setup
 
-### `npm run eject`
+```bash
+cd backend
+pip install -r requirements.txt
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+#### 2. Create `.env` file
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxx
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+#### 3. Run the backend
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+python backend.py
+```
 
-## Learn More
+It runs at: `http://localhost:5000`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 🌐 Frontend (React + Tailwind CSS)
 
-### Code Splitting
+#### 1. Setup
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```bash
+cd frontend
+npm install
+```
 
-### Analyzing the Bundle Size
+#### 2. Start React server
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```bash
+npm start
+```
 
-### Making a Progressive Web App
+Runs at: `http://localhost:3000`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## 🧠 API Reference
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### `POST /summarize`
 
-### Deployment
+**Request:**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```json
+{
+  "url": "https://en.wikipedia.org/wiki/OpenAI"
+}
+```
 
-### `npm run build` fails to minify
+**Response:**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```json
+{
+  "summary": "OpenAI is a leading research lab focused on developing AI responsibly..."
+}
+```
+
+---
+
+## 🔥 Features
+
+- ✂️ Automatically removes navbars, footers, ads from scraped pages
+- 📄 Supports large inputs (with token-limited truncation)
+- 💬 Uses OpenAI’s GPT for accurate, clean summaries
+- 💻 Fully styled frontend with TailwindCSS
+- 🧠 Easily extendable for PDF, text input, or local LLMs
+
+---
+
+## 📌 Future Ideas
+
+- 🔁 Add support for bullet-point vs paragraph summaries
+- 📄 Export summaries to PDF or Markdown
+- 🧠 Add local model support with Ollama or Llama.cpp
+- 🌍 Deploy backend (Render, Railway) and frontend (Vercel, Netlify)
+
+---
+
+## 📄 License
+
+MIT License  
+Built with 💙 by [Your Name](https://github.com/yourusername)
