@@ -102,20 +102,12 @@ Response:
 
 > 📸 Add your screenshots below
 
-- `screenshots/homepage.png`
-- `screenshots/summary-result.png`
+- `screenshots/Screenshot 2025-04-12 at 6.44.09 PM.png`
+- `screenshots/Screenshot 2025-04-12 at 6.43.34 PM.png`
 
 ---
 
-## 🧠 Future Improvements
 
-- PDF & text input support
-- Export summaries to Markdown/PDF
-- Add toggle for bullet vs paragraph summary
-- Deploy backend to Render/Railway
-- Deploy frontend to Vercel/Netlify
-
----
 
 ## 📄 License
 
