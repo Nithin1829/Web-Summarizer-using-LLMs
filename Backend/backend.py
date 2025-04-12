@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 from openai import OpenAI
 from dotenv import load_dotenv
 import os
+import subprocess
 
 # Load .env
 load_dotenv()
@@ -38,20 +39,11 @@ class Website:
         except Exception as e:
             return f"Failed to extract text from URL: {e}"
 
-# Message builder (takes plain text, not Website)
-def message_for(text):
-    return [
-        {
-            "role": "system",
-            "content": "You are a helpful assistant that summarizes website content clearly and concisely."
-        },
-        {
-            "role": "user",
-            "content": f"Summarize the following web page:\n\n{text}"
-        }
-    ]
+# Prompt/message builder
+def build_prompt(text):
+    return f"Summarize the following web page:{text}"
 
-# Main summarize endpoint
+# Route: summarize using both OpenAI and Ollama
 @app.route("/summarize", methods=["POST"])
 def summarize():
     try:
@@ -61,25 +53,39 @@ def summarize():
         website = Website(url)
         text = website.text
 
-        # Truncate to 24,000 characters (~8,000 tokens)
         if len(text) > 24000:
             text = text[:24000]
 
-        messages = message_for(text)
+        prompt = build_prompt(text)
 
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo",  # You can change this to "gpt-4o" if needed
+        # 1. OpenAI API summary
+        messages = [
+            {"role": "system", "content": "You are a helpful assistant that summarizes website content clearly and concisely."},
+            {"role": "user", "content": prompt}
+        ]
+
+        openai_response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
             messages=messages
         )
+        openai_summary = openai_response.choices[0].message.content
 
-        summary = response.choices[0].message.content
-        return jsonify({"summary": summary})
+        # 2. Ollama local model summary
+        ollama_response = subprocess.run(
+            ["ollama", "run", "llama3", prompt],
+            capture_output=True,
+            text=True
+        )
+        ollama_summary = ollama_response.stdout.strip()
+
+        return jsonify({
+            "openai_summary": openai_summary,
+            "ollama_summary": ollama_summary
+        })
 
     except Exception as e:
         print("❌ Error:", e)
         return jsonify({"error": str(e)}), 500
 
-# Run the app
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
-
