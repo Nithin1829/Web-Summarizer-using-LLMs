@@ -100,8 +100,9 @@ Response:
 
 ## 📷 Screenshots
 
-- screenshots/shot1.png
-- screenshots/shot2.png
+![Homepage](screenshots/shot1.png)
+![Summary Results](screenshots/shot2.png)
+
 
 ---
 
