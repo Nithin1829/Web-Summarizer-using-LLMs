@@ -100,8 +100,8 @@ Response:
 
 ## 📷 Screenshots
 
-- `screenshots/shot1.png`
-- `screenshots/shot2.png`
+- screenshots/shot1.png
+- screenshots/shot2.png
 
 ---
 
