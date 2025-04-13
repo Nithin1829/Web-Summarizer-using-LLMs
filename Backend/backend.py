@@ -18,9 +18,6 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 app = Flask(__name__)
 CORS(app)
 
-@app.route("/", methods=["GET"])
-def home():
-    return "✅ Flask backend is running!"
 
 class Website:
     def __init__(self, url):
@@ -38,9 +35,7 @@ class Website:
             return f"Failed to extract text from URL: {e}"
 
 def build_prompt(text):
-    return f"Summarize the following web page:
-
-{text}"
+    return f"Summarize the following web page:{text}"
 
 @app.route("/summarize", methods=["POST"])
 def summarize():
